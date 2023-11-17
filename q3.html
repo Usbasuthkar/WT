@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather Data</title>
+    </head>
+    <body>
+        <h1>Weather Information App</h1>
+        <label for="location">Select Location from the following: </label>
+        <select id="location">
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Pune">Pune</option>
+        </select>
+        <button id="get-weather">Fetch Weather Data</button>
+        <div id="weather-info">
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            document.getElementById('get-weather').addEventListener('click', () => {
+                const selectedLocation = document.getElementById('location').value;
+                const apiKey = '';
+    
+                $.ajax({
+                    url: `https://api.openweathermap.org/data/2.5/weather?q=${selectedLocation}&appid=${apiKey}`,
+                    method: 'GET',
+                    success: function (data) {
+                        displayDetails(data);
+                    },
+                    error: function (error) {
+                        console.log('Error fetching the data', error);
+                    }
+                });
+            });
+    
+            function displayDetails(data) {
+                var temperature = data.main.temp - 273.15;
+                var description = data.weather[0].description;
+                var name=data.name;
+    
+                // Display the weather details on the webpage
+                var weatherDetailsElement = document.getElementById('weather-info');
+                weatherDetailsElement.innerHTML = `
+                    <h2>Weather Details</h2>
+                    <p> Name: ${name}</p>
+                    <p>Temperature: ${temperature.toFixed(2)} C</p>
+                    <p>Description: ${description}</p>
+                `;
+            }
+        </script>
+    </body>
+    </html>

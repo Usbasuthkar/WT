@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>JSON to Table</h1>
+
+    <div id="table-container"></div>
+
+    <script>
+        const jsondata = [
+            {"Name":"Bhavana","Age":20,"College":"KMIT","Year":3,"Sem":1},
+            {"Name":"Ram","Age":21,"College":"JNTU","Year":4,"Sem":2},
+            {"Name":"John","Age":26,"College":"KMEC","Year":1,"Sem":1},
+            {"Name":"Reena","Age":19,"College":"NGIT","Year":3,"Sem":1},
+        ];
+        function gettable(data){
+            const tabcont=document.getElementById("table-container");
+            const table=document.createElement('table');
+            const header=table.insertRow();
+            Object.keys(data[0]).forEach(i => {
+                const th=document.createElement('th');
+                th.textContent=i;
+                header.appendChild(th);
+            })
+            data.forEach(i=>{
+                const row=table.insertRow();
+                Object.values(i).forEach(val=>{
+                    const cell=row.insertCell();
+                    cell.textContent=val;
+                });
+            });
+            tabcont.appendChild(table);
+        }
+        gettable(jsondata)
+    </script>
+</body>
+</html>

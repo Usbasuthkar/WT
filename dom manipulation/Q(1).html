@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Data Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON Data Table</h1>
+  <div>
+    <label for="json-input">Enter JSON Data:</label>
+    <textarea id="json-input" rows="5" cols="50"></textarea>
+    <button id="parse-json">Parse JSON</button>
+  </div>
+
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    document.getElementById('parse-json').addEventListener('click', () => {
+      const jsonDataInput = document.getElementById('json-input').value;
+      const jsonData = JSON.parse(jsonDataInput);
+      const tableBody = document.querySelector('#data-table tbody');
+
+      tableBody.innerHTML = ''; // Clear existing table data
+
+      jsonData.forEach(item => {
+        const row = tableBody.insertRow();
+        const nameCell = row.insertCell(0);
+        const ageCell = row.insertCell(1);
+        const cityCell = row.insertCell(2);
+
+        nameCell.textContent = item.name;
+        ageCell.textContent = item.age;
+        cityCell.textContent = item.city;
+      });
+    });
+  </script>
+</body>
+</html>

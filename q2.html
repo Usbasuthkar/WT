@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Json to table</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        #studenttable {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h3>Enter Student Information: </h3>
+    <form id="information">
+        <label for="name">Name of the Student: </label>
+        <input type="text" id="name">
+        <label for="rollno">Enter Student rollno: </label>
+        <input type="number" id="rollno">
+
+        <label for="m1">Enter marks 1:</label>
+        <input type="number" id="m1">
+
+        <label for="m2">Enter marks 2:</label>
+        <input type="number" id="m2">
+
+        <label for="m3">Enter marks 3:</label>
+        <input type="number" id="m3">
+
+       <button type="button" onclick="submitform()">Submit</button>
+    </form>
+    <div id="table-container">
+        <table id="studenttable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll Number</th>
+                    <th>Marks 1</th>
+                    <th>Marks 2</th>
+                    <th>Marks 3</th>
+                    <th>GPA</th>
+
+                </tr>
+            </thead>
+            <tbody id="studentTableBody"></tbody>
+        </table>
+    </div>
+    <script>
+        
+        function submitform(){
+            const name=document.getElementById('name').value;
+            const rollno=document.getElementById('rollno').value;
+            const m1=parseFloat(document.getElementById('m1').value);
+            const m2=parseFloat(document.getElementById('m2').value);
+            const m3=parseFloat(document.getElementById('m3').value);
+
+            const gpa=getgpa(m1,m2,m3);
+
+            const stinfo={
+                Name:name,
+                Roll_Number:rollno,
+                Marks_1:m1,
+                Marks_2:m2,
+                Marks_3:m3,
+                GPA:gpa.toFixed(2)
+            };
+            displayinfo(stinfo);
+            clearForm();
+        }
+        function getgpa(m1,m2,m3){return (m1+m2+m3)/3;}
+
+        function displayinfo(data){
+            const tabbod=document.getElementById('studentTableBody');
+            const newrow=tabbod.insertRow();
+            Object.values(data).forEach(i => {
+                const cell=newrow.insertCell();
+                cell.textContent=i;
+            })
+        }
+        function clearForm() {
+            document.getElementById('information').reset();
+        }
+    </script>
+</body>
+</html>

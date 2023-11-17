@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="rollno">Roll No:</label>
+        <input type="text" id="rollno" name="rollno" required>
+
+        <label for="subject1">Subject 1 (Credits = 1):</label>
+        <input type="number" id="subject1" name="subject1" required>
+
+        <label for="subject2">Subject 2 (Credits = 4):</label>
+        <input type="number" id="subject2" name="subject2" required>
+
+        <label for="subject3">Subject 3 (Credits = 3):</label>
+        <input type="number" id="subject3" name="subject3" required>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Subject 1</th>
+                <th>Subject 2</th>
+                <th>Subject 3</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+            <!-- Student information will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form values
+            var name = document.getElementById('name').value;
+            var rollno = document.getElementById('rollno').value;
+            var subject1 = parseInt(document.getElementById('subject1').value);
+            var subject2 = parseInt(document.getElementById('subject2').value);
+            var subject3 = parseInt(document.getElementById('subject3').value);
+
+            // Calculate GPA
+            var totalMarks = (subject1 * 1) + (subject2 * 4) + (subject3 * 3);
+            var gpa = (totalMarks / 8).toFixed(2);
+
+            // Create a new table row with the user's data
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${rollno}</td>
+                <td>${subject1}</td>
+                <td>${subject2}</td>
+                <td>${subject3}</td>
+                <td>${gpa}</td>
+            `;
+
+            // Add the row to the table
+            document.getElementById('studentTableBody').appendChild(newRow);
+
+            // Reset the form
+            document.getElementById('studentForm').reset();
+        });
+    </script>
+</body>
+</html>
